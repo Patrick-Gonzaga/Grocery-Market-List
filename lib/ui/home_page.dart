@@ -32,7 +32,13 @@ class _HomePageState extends State<HomePage> {
   Future<void> _loadDbList() async {
     final list = await dbHelper.getAllGroceryItems();
     setState(() {
+      print(list);
+
       groceryList = list;
+      total = 0;
+      for (var item in list) {
+        total += double.parse(item.value);
+      }
     });
   }
 
@@ -45,6 +51,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   String typeSelected = 'grocery';
+  double total = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +61,16 @@ class _HomePageState extends State<HomePage> {
         title: Text('Grocery List'),
         elevation: 10,
         shadowColor: Colors.black45,
+        actions: [
+          Container(
+            padding: EdgeInsets.only(right: 15),
+            child: Text(
+              "R\$${total.toStringAsFixed(2).replaceAll(".", ",")}",
+              textAlign: TextAlign.end,
+              style: TextStyle(fontSize: 22),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -401,6 +418,10 @@ class _HomePageState extends State<HomePage> {
                     dbHelper.getAllGroceryItems().then((list) {
                       setState(() {
                         groceryList = list;
+                        total = 0;
+                        for (var item in list) {
+                          total += double.parse(item.value);
+                        }
                       });
                     });
                   },
@@ -706,6 +727,10 @@ class _HomePageState extends State<HomePage> {
                           dbHelper.getAllGroceryItems().then((list) {
                             setState(() {
                               groceryList = list;
+                              total = 0;
+                              for (var item in list) {
+                                total += double.parse(item.value);
+                              }
                             });
                           });
                           print(text);
@@ -753,6 +778,10 @@ class _HomePageState extends State<HomePage> {
                           dbHelper.getAllGroceryItems().then((list) {
                             setState(() {
                               groceryList = list;
+                              total = 0;
+                              for (var item in list) {
+                                total += double.parse(item.value);
+                              }
                               print(list);
                             });
                           });
